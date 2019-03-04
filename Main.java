@@ -11,11 +11,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 //Diana de Leon 18607
 
@@ -100,6 +102,11 @@ public class Main extends javax.swing.JFrame {
         jRadioButton5.setText("Coleccion del Usuario");
 
         jButton2.setText("Mostrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Borrar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +116,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Agregar");
 
@@ -134,23 +146,26 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addComponent(jButton7))
+                    .addComponent(jRadioButton5)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6))
-                            .addComponent(jTextField1))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton6))
+                                    .addComponent(jTextField1))
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jRadioButton4)
+                                .addGap(79, 79, 79)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRadioButton2)
                             .addComponent(jRadioButton3)
                             .addComponent(jRadioButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5))
+                            .addComponent(jButton5))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
@@ -225,7 +240,8 @@ public class Main extends javax.swing.JFrame {
         //Toma el texto de JtextField
         String miarchivo= jTextField1.getText();
         mapgeneral = factory.getMap("HASHMAP");
-         if (jRadioButton1.isSelected()){
+        //Utiliza el map seleccionado por el usuario
+        if (jRadioButton1.isSelected()){
             mapgeneral = factory.getMap("HASHMAP");
         }
         else if (jRadioButton2.isSelected()){
@@ -252,6 +268,7 @@ public class Main extends javax.swing.JFrame {
             while (datos!=null){
                 //separa el nombre y el tipo de carta
                String partes[] = datos.split("|");
+               //genera la baraja en un map seleccionado
                mapgeneral.put(partes[0], partes[1]);
                datos= lector1.readLine();
             }
@@ -261,6 +278,30 @@ public class Main extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String answer;
+        answer = JOptionPane.showInputDialog(null, "¿Que carta desea buscar?");
+        if (mapgeneral.containsKey(answer)){
+            String tipo= mapgeneral.get(answer);
+            JOptionPane.showMessageDialog(null, "La carta es de tipo: " + tipo);  
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Esa carta no existe");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextArea1.setEditable(true);
+        String clave;
+        Iterator<String> productos = mapgeneral.keySet().iterator();
+        while(productos.hasNext()){
+            clave = productos.next();
+            jTextArea1.append(clave + " - " + mapgeneral.get(clave) +"\n");
+        }     
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
