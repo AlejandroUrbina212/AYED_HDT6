@@ -15,7 +15,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -264,14 +266,27 @@ public class Main extends javax.swing.JFrame {
             lector1 = new BufferedReader(lector);
             //lee una linea del archivo 
             datos= lector1.readLine();
+            //System.out.println(datos);
             //verifica que tenga contenido
             while (datos!=null){
                 //separa el nombre y el tipo de carta
-               String partes[] = datos.split("|");
+               //String partes[] = datos.split("\\|");
+               String partes[] = datos.split(Pattern.quote("|"));
                //genera la baraja en un map seleccionado
                mapgeneral.put(partes[0], partes[1]);
+               //System.out.println(partes[0]);
+               //System.out.println(partes[1]);
                datos= lector1.readLine();
+               //System.out.println(datos);
             }
+            /*Scanner input;
+            input = new Scanner(lector1);
+            while (input.hasNextLine()) {
+                input.useDelimiter("\\r\\n");
+                String line = input.next();
+                System.out.println(line);
+            }
+            input.close();*/
         }
         //captura erroes de division entre cero, no encuentre el archivo o que no sea un numero
         catch(IOException e){
@@ -297,6 +312,17 @@ public class Main extends javax.swing.JFrame {
         jTextArea1.setEditable(true);
         String clave;
         Iterator<String> productos = mapgeneral.keySet().iterator();
+        //Muestra la coleccion seleccionado por el usuario
+        if (jRadioButton4.isSelected()){
+            productos = mapgeneral.keySet().iterator();
+        }
+        else if (jRadioButton5.isSelected()){
+            productos = mapusuario.keySet().iterator();
+        }
+        else{
+            // si no hay ninguno seleccionado muestra un mensaje de advertencia 
+            jOptionPane1.showMessageDialog(null, "Por favor seleccione una opcion, de lo contario se usara la coleccion general", "Advertencia", jOptionPane1.WARNING_MESSAGE);
+        }
         while(productos.hasNext()){
             clave = productos.next();
             jTextArea1.append(clave + " - " + mapgeneral.get(clave) +"\n");
