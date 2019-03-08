@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package HDT6;
+//package HDT6;
 // Integrantes:
 //Luis Alejandro Urbina  18473
 
