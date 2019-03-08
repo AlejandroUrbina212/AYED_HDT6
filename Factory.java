@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package HDT6;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
- *
+ * Class to create a different list depending on the user´s request (as a string)
  * @author DIANA
  */
 public class Factory {
-    public Map<String,String> getMap(String map){
+    /**
+     * Returns an instance of the map selected by the user (as a String)
+     * @param map the string of the map the user will choose
+     * @return one of three posible instance of a Map-type Object
+     */
+    public static Map<String,String> getMap(String map){
         switch (map) {
             case "HASHMAP":
                 return new HashMap<>();
@@ -28,7 +26,13 @@ public class Factory {
         }
         return null;
     }
-    public Map<String,Integer> getMapCant(String map){
+
+    /**
+     * Returns an instance of a map for control of the quantity of cards the user has
+     * @param map the string of the desired map
+     * @return the instance of the Map-type object according to the param
+     */
+    public static Map<String,Integer> getMapCant(String map){
         switch (map) {
             case "HASHMAP":
                 return new HashMap<>();
